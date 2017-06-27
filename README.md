@@ -152,7 +152,57 @@ app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
 
 ## Step 5
 
-Create a `serialize` and `deserialize` endpoint. Use serialize to grab the user id, display name, nickname, and email.
+### Summary 
+
+In this step, we'll use the `serializeUser` and `deSerializeUser` methods of passport. These methods get called before a successful redirect. We can use these methods to pick what properties we want to store on session.
+
+### Instructions
+
+* Call the `passport.serializeUser` method and pass in a function as the first argument.
+  * This function should have a `user` and `done` parameter.
+  * This function should call `done` with `null` as the first argument and an object as the argument.
+    * This object is what will be stored on `req.user` or `req.session.passsport.user`.
+  * Use an object that only has the `id`, `displayName`, `nickname`, and `email` from `user`.
+* Call the `passport.deSerializeUser` method and pass in a function as the second argument.
+  * This function should should have a `obj` and `done `parameter.
+    * `obj` will equal the object we passed into `done` from `serializeUser`.
+  * This functions should call `done` with `null` as the first argument and `obj` as the second argument.
+
+### Solution
+
+<details>
+
+<summary> <code> index.js </code> </summary>
+
+```js
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const strategy = require(`${__dirname}/strategy.js`);
+
+const app = express();
+app.use( session({
+  secret: 'sup dude',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use( passport.initialize() );
+app.use( passport.session() );
+passport.use( strategy );
+
+passport.serializeUser(function(user, done) {
+  done(null, { id: user.id, display: user.displayName, nickname: user.nickname, email: user.emails[0].value });
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
+```
+
+</details>
 
 ## Step 6
 
