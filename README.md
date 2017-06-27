@@ -251,7 +251,11 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-app.get( '/login', passport.authenticate('auth0', { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }) );
+app.get( '/login', 
+  passport.authenticate('auth0', 
+    { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
+  )
+);
 
 const port = 3000;
 app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );

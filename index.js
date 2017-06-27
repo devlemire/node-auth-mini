@@ -21,7 +21,11 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-app.get( '/login', passport.authenticate('auth0', { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }) );
+app.get( '/login', 
+  passport.authenticate('auth0', 
+    { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
+  )
+);
 
 app.get('/me', ( req, res, next) => {
   if ( !req.user ) {
