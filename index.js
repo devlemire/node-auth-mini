@@ -14,28 +14,23 @@ app.use( passport.session() );
 passport.use( strategy );
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, { id: user.id, display: user.displayName, nickname: user.nickname, email: user.emails[0].value });
 });
 
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-app.get('/callback', passport.authenticate('auth0', { failureRedirect: '/failed' }),
-  ( req, res ) => {
-    res.redirect('/me');
-  } 
-);
+app.get( '/login', passport.authenticate('auth0', { successRedirect: '/me', failureRedirect: '/failed' }) );
 
 app.get('/me', ( req, res, next) => {
   if ( !req.user ) {
     res.redirect('/login');
   } else {
+    // console.log(req.session.passport.user);
     res.status(200).send( JSON.stringify( req.user, null, 10 ) );
   }
 });
-
-app.get('/login', passport.authenticate('auth0', {}));
 
 app.get('/failed', ( req, res, next) => {
   res.status(500).send('You are not authorized!');
