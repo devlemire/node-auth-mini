@@ -1,11 +1,38 @@
-# node-auth-mini
-Node Auth 1 - Mini
+<img src="https://devmounta.in/img/logowhiteblue.png" width="250" align="right">
+
+# Project Summary
+
+In this project, we'll use `passport` to handle authenticating users. Passport can use many different `strategies` to authenticate users. However, we'll take a look at just one of them for this project. We are going to use the `auth0` strategy. We'll have to sign-up at `manage.auth0.com` to get an app (aka client) that we can login to. 
+
+## Setup
+
+* `Fork` and `clone` this repository.
+* `cd` into the project directory.
+* Run `npm install`.
 
 ## Step 1
 
-Install and save `passport` and `passport-auth0`
+### Summary
+
+In this step, we'll install the required dependencies to use passport and the `auth0` strategy in a node application.
+
+### Instructions
+
+* Run `npm install --save passport passport-auth0`.
+
+### Solution
+
+<b> insert giphy here </b>
 
 ## Step 2
+
+### Summary
+
+In this step, we'll go to `manage.auth0.com` to create an account and modify the default client they give us. 
+
+### Instructions
+
+* 
 
 Go to Auth0 Dashboard, register for a personal account, modify the settings of the default app
 
