@@ -32,14 +32,20 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 ### Instructions
 
-* 
-
-Go to Auth0 Dashboard, register for a personal account, modify the settings of the default app
-
-* client type: non interactive client
-* token endpoint auth method: basic
-* callback url: http://localhost:3000/login
-* allowed origins: http://localhost:3000
+* Go to <a href="manage.auth0.com">Manage Auth0</a>.
+* Register for an account.
+  * Set the account type to `Personal`.
+  * Set the role to `Developer`.
+  * Set the project to `Just playing around`.
+* Login to your Auth0 account.
+* Go to `Clients` using the left navigation bar.
+* Click on `Settings` for the default app.
+  * Change the `Client Type` to `Non Interactive Client`.
+  * Change the `Token Endpoint Authentication Method` to `Basic`.
+  * Change the `Allowed Callback URLs` to `http://localhost:3000/login`.
+  * Change the `Allowed Origins` to `http://localhost:3000`
+* Click `Save Changes`.
+* Keep the page open, we'll need the `domain`, `id`, and `secret` later.
 
 ## Step 3
 
