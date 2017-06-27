@@ -31,7 +31,9 @@ app.get('/me', ( req, res, next) => {
   if ( !req.user ) {
     res.redirect('/login');
   } else {
-    // console.log(req.session.passport.user);
+    // req.user === req.session.passport.user
+    // console.log( req.user )
+    // console.log( req.session.passport.user );
     res.status(200).send( JSON.stringify( req.user, null, 10 ) );
   }
 });

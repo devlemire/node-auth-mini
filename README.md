@@ -265,11 +265,83 @@ app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
 
 ## Step 7
 
-Create a `/me` endpoint that sends a response of `req.user` or `req.session.passport.user`.
+### Summary 
+
+In this step, we'll create a `/me` endpoint that checks to see if `req.user` exists. If it does, it will send it. If it doesn't, it will redirect to the `/login` endpoint.
+
+### Instructions
+
+* Create a `GET` endpoint at `/me` that checks to see if `req.user` exists.
+  * If it does, return a status 200 with the `req.user` object.
+  * If it doesn't, redirect to `/login`.
+
+### Solution
+
+<details>
+
+<summary> <code> index.js </code> </summary>
+
+```js
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const strategy = require(`${__dirname}/strategy.js`);
+
+const app = express();
+app.use( session({
+  secret: 'sup dude',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use( passport.initialize() );
+app.use( passport.session() );
+passport.use( strategy );
+
+passport.serializeUser(function(user, done) {
+  done(null, { id: user.id, display: user.displayName, nickname: user.nickname, email: user.emails[0].value });
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+app.get( '/login', 
+  passport.authenticate('auth0', 
+    { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }
+  )
+);
+
+app.get('/me', ( req, res, next) => {
+  if ( !req.user ) {
+    res.redirect('/login');
+  } else {
+    // req.user === req.session.passport.user
+    // console.log( req.user )
+    // console.log( req.session.passport.user );
+    res.status(200).send( JSON.stringify( req.user, null, 10 ) );
+  }
+});
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
+```
+
+</details>
 
 ## Step 8
 
-Test the strategy in your browser ( http://localhost:3000/login )
+### Summary
+
+In this step, we'll open a browser and see if we can login to our Auth0 client.
+
+### Instructions
+
+* Open a browser and navigate to `http://localhost:3000/login`.
+* Sign up for the client and then log in to it.
+
+### Solution
+
+<b> insert giphy here </b>
 
 
 
