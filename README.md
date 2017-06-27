@@ -110,7 +110,45 @@ module.exports = new Auth0Strategy({
 
 ## Step 4
 
-Require passport and strategy in index.js. Configure the app to use sessions. Initialize passport and configure passport to use sessions.
+### Summary
+
+In this step, we'll configure our app to use sessions and passport with our newly created strategy. 
+
+### Instructions
+
+* Open `index.js`.
+* Require `passport` and `strategy` from `strategy.js`.
+* Configure the app to use sessions.
+* Initialize passport and configure passport to use sessions.
+* Configure passport to use our required strategy.
+
+### Solution
+
+<details>
+
+<summary> <code> index.js </code> </summary>
+
+```js
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const strategy = require(`${__dirname}/strategy.js`);
+
+const app = express();
+app.use( session({
+  secret: 'sup dude',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use( passport.initialize() );
+app.use( passport.session() );
+passport.use( strategy );
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
+```
+
+</details>
 
 ## Step 5
 
