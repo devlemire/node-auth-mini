@@ -82,6 +82,32 @@ In this step, we'll create a `strategy.js` file that will `require` the `auth0` 
     </details>
 * Modify the `domain`, `clientID`, and `clientSecret` to use yours from `manage.auth0.com`.
 
+### Solution
+
+<details>
+
+<summary> <code> strategy.js </code> </summary>
+
+```js
+const Auth0Strategy = require('passport-auth0');
+
+module.exports = new Auth0Strategy({
+   domain:       'jameslemire.auth0.com',
+   clientID:     '4_8ZQzEOP6mYeoQbeAmscWFmjl-SjIVt',
+   clientSecret: '409I19zLLQfdsfgdfgvtQwlDwM=fraMC234bcdM07kntJE2f4D6PdZNfzRO23417A_1OfzcM7Owtla',
+   callbackURL:  '/login'
+  },
+  function(accessToken, refreshToken, extraParams, profile, done) {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+    return done(null, profile);
+  }
+);
+```
+
+</details>
+
 ## Step 4
 
 Require passport and strategy in index.js. Configure the app to use sessions. Initialize passport and configure passport to use sessions.
