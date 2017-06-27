@@ -161,8 +161,8 @@ In this step, we'll use the `serializeUser` and `deSerializeUser` methods of pas
 * Call the `passport.serializeUser` method and pass in a function as the first argument.
   * This function should have a `user` and `done` parameter.
   * This function should call `done` with `null` as the first argument and an object as the argument.
-  * Use an object that only has the `id`, `displayName`, `nickname`, and `email` from `user`.
-* Call the `passport.deSerializeUser` method and pass in a function as the second argument.
+    * Use an object that only has the `id`, `displayName`, `nickname`, and `email` from `user`.
+* Call the `passport.deSerializeUser` method and pass in a function as the first argument.
   * This function should should have a `obj` and `done `parameter.
     * `obj` will equal the object we passed into `done` from `serializeUser`.
   * This functions should call `done` with `null` as the first argument and `obj` as the second argument.
