@@ -49,7 +49,38 @@ In this step, we'll go to `manage.auth0.com` to create an account and modify the
 
 ## Step 3
 
-Create a strategy js file. Require auth0 strat. Create a new strategy and export it. Get your client domain, id, and secret from manage.auth0.com
+### Summary
+
+In this step, we'll create a `strategy.js` file that will `require` the `auth0` strategy and we'll configure it to use our newly created `auth0` client.
+
+### Instructions
+
+* Create a `strategy.js` file.
+* Open `strategy.js`.
+* Require the `passport-auth0` strategy in a variable called `Auth0Strategy`.
+* Use `module.exports` to export a `new Auth0Strategy`.
+  * <details>
+  
+    <summary> <code> Syntax </code> </summary>
+    
+    ```js
+    module.exports = new Auth0Strategy({
+      domain:       '...',
+      clientID:     '...',
+      clientSecret: '...',
+      callbackURL:  '/login'
+      },
+      function(accessToken, refreshToken, extraParams, profile, done) {
+        // accessToken is the token to call Auth0 API (not needed in the most cases)
+        // extraParams.id_token has the JSON Web Token
+        // profile has all the information from the user
+        return done(null, profile);
+      }
+    );
+    ```
+    
+    </details>
+* Modify the `domain`, `clientID`, and `clientSecret` to use yours from `manage.auth0.com`.
 
 ## Step 4
 
