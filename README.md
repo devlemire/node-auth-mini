@@ -214,9 +214,50 @@ In this step, we'll create a login endpoint that will call the `authenticate` me
 ### Instructions
 
 * Open `index.js`.
-* 
+* Create a `GET` endpoint at `/login` that calls the `authenticate` method on passport.
+  * The first argument should be a string of the strategy: `'auth0'`.
+  * The second argument should be a configuration object:
+    * Add a `successRedirect` property that equals `'/me'`.
+    * Add a `failureRedirect` property that equals `'/login'`.
+    * Add a `failureFlash` property that equals `true`.
 
-Create a login endpoint that uses `passport.authenticate` and redirects to `/me` on success and `/login` on failure. Enable failureFlash.
+### Solution
+
+<details>
+
+<summary> <code> index.js </code> </summary>
+
+```js
+const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const strategy = require(`${__dirname}/strategy.js`);
+
+const app = express();
+app.use( session({
+  secret: 'sup dude',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use( passport.initialize() );
+app.use( passport.session() );
+passport.use( strategy );
+
+passport.serializeUser(function(user, done) {
+  done(null, { id: user.id, display: user.displayName, nickname: user.nickname, email: user.emails[0].value });
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+app.get( '/login', passport.authenticate('auth0', { successRedirect: '/me', failureRedirect: '/login', failureFlash: true }) );
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
+```
+
+</details>
 
 ## Step 7
 
