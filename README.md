@@ -158,6 +158,7 @@ In this step, we'll use the `serializeUser` and `deSerializeUser` methods of pas
 
 ### Instructions
 
+* Open `index.js`.
 * Call the `passport.serializeUser` method and pass in a function as the first argument.
   * This function should have a `user` and `done` parameter.
   * This function should call `done` with `null` as the first argument and an object as the argument.
@@ -205,6 +206,15 @@ app.listen( port, () => { console.log(`Server listening on port ${port}.`); } );
 </details>
 
 ## Step 6
+
+### Summary 
+
+In this step, we'll create a login endpoint that will call the `authenticate` method on passport. We'll then configure it to `redirect` to a `/me` endpoint on success and the `/login` endpoint on failure. We'll also enable `failureFlash` so passport can flash an error message on failure.
+
+### Instructions
+
+* Open `index.js`.
+* 
 
 Create a login endpoint that uses `passport.authenticate` and redirects to `/me` on success and `/login` on failure. Enable failureFlash.
 
